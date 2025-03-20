@@ -1,0 +1,119 @@
+# ================= #
+# Unity Generated   #
+# ================= #
+
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+
+# Addressables 相关缓存
+/Assets/StreamingAssets/*.addressable
+/Assets/StreamingAssets/*.hash
+/Assets/AddressableAssetsData/*/*.bin*
+
+# Shader Cache（Unity 2021+）
+/[Uu]nity[Ss]hader[Cc]ache/
+
+# ==================== #
+# OS Specific Files    #
+# ==================== #
+
+# Windows 相关
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS 相关
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux 相关
+.nfs*
+
+# ======================== #
+# IDE & Editor Configs     #
+# ======================== #
+
+# Visual Studio
+.vscode/
+*.code-workspace
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.pdb
+*.opendb
+*.booproj
+*.tmp
+*.svd
+*.sln*
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# MonoDevelop
+*.pidb
+*.suo
+
+# ======================== #
+# Unity Specific Settings  #
+# ======================== #
+
+# Unity Collaborate 版本控制相关文件
+/Assets/._*
+
+# 每个开发者本地缓存的 Layout 和 Preferences
+[Uu]ser[Ss]ettings/
+[Uu]serPreferences/
+*.log
+*.stacktrace
+
+# Unity 本地 Package 缓存
+/[Pp]ackages/*/
+!Packages/manifest.json
+!Packages/packages-lock.json
+
+# ================= #
+# Extensions       #
+# ================= #
+
+# 可能的临时文件
+*.bak
+*.swp
+*.lock
+*.lock.json
+*.tmp
+*.cache
+*.backup
+
+# Python/Node 相关缓存（如果项目有工具脚本）
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+node_modules/
+
+# ================== #
+# Git Specific      #
+# ================== #
+
+# 忽略 Git 合并冲突临时文件
+*.orig
+
+# Git LFS 可能的错误缓存文件
+*.lfs
+
+# Ignore everything in the Generated folder
+/Generated/
