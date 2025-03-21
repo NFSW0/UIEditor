@@ -117,3 +117,78 @@ node_modules/
 
 # Ignore everything in the Generated folder
 /Generated/
+
+# ======================== #
+# Visual Studio (Extended) #
+# ======================== #
+
+# Visual Studio 缓存和临时文件
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+*.VC.VC.opendb
+
+# Visual Studio 代码分析缓存
+*.CodeAnalysisLog.xml
+*.CodeAnalysisResult.xml
+
+# Visual Studio 发布输出
+bin/
+obj/
+
+# Visual Studio 测试结果
+/TestResults/
+
+# Visual Studio IIS Express 配置
+/.vs/config/applicationhost.config
+/.vs/
+
+# ======================== #
+# VS Code (Extended)       #
+# ======================== #
+
+# VS Code 缓存和用户设置
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# VS Code 临时文件
+*.code-workspace
+
+# ======================== #
+# Sublime Text             #
+# ======================== #
+
+# Sublime Text 缓存和临时文件
+*.sublime-project
+*.sublime-workspace
+
+# ======================== #
+# Atom                     #
+# ======================== #
+
+# Atom 缓存和临时文件
+.atom/
+*.cson
+*.json
+
+# ======================== #
+# Other Editors            #
+# ======================== #
+
+# Notepad++ 临时文件
+*.bak
+*.tmp
+
+# Vim 临时文件
+*.swp
+*.swo
+*.swn
+
+# Emacs 临时文件
+*~
+\#*\#

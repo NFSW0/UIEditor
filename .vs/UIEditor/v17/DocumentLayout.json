@@ -1,12 +1,119 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\assets\\scripts\\scene_uieditor\\uiattributes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scene_uieditor\\uiattributes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|c:\\users\\12625\\desktop\\uieditor\\uieditor\\assets\\scripts\\scene_uieditor\\dynamicpropertyapplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scene_uieditor\\dynamicpropertyapplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\assets\\scripts\\scene_uieditor\\uieditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scene_uieditor\\uieditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\assets\\scripts\\tools\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\tools\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\assets\\scripts\\widgets\\basewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\widgets\\basewidget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\assets\\scripts\\widgets\\metadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C620185C-56B6-7300-2A19-975D0022CF2E}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\widgets\\metadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DynamicPropertyApplier.cs",
+              "DocumentMoniker": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Scene_UIEditor\\DynamicPropertyApplier.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Scene_UIEditor\\DynamicPropertyApplier.cs",
+              "ToolTip": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Scene_UIEditor\\DynamicPropertyApplier.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Scene_UIEditor\\DynamicPropertyApplier.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T08:59:30.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FileManager.cs",
+              "DocumentMoniker": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Tools\\FileManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Tools\\FileManager.cs",
+              "ToolTip": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Tools\\FileManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Tools\\FileManager.cs",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAQwMIAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T08:08:55.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UIAttributes.cs",
+              "DocumentMoniker": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Scene_UIEditor\\UIAttributes.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Scene_UIEditor\\UIAttributes.cs",
+              "ToolTip": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Scene_UIEditor\\UIAttributes.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Scene_UIEditor\\UIAttributes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T02:34:38.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UIEditor.cs",
+              "DocumentMoniker": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Scene_UIEditor\\UIEditor.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Scene_UIEditor\\UIEditor.cs",
+              "ToolTip": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Scene_UIEditor\\UIEditor.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Scene_UIEditor\\UIEditor.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAAoAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T02:22:04.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MetaData.cs",
+              "DocumentMoniker": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Widgets\\MetaData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Widgets\\MetaData.cs",
+              "ToolTip": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Widgets\\MetaData.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Widgets\\MetaData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T02:22:00.831Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BaseWidget.cs",
+              "DocumentMoniker": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Widgets\\BaseWidget.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Widgets\\BaseWidget.cs",
+              "ToolTip": "C:\\Users\\12625\\Desktop\\UIEditor\\UIEditor\\Assets\\Scripts\\Widgets\\BaseWidget.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Widgets\\BaseWidget.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T02:03:46.152Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

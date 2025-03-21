@@ -1,0 +1,97 @@
+<Prefab>
+	<Window>
+		<Widget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed"  SuggestedWidth="600" SuggestedHeight="400" VerticalAlignment="Bottom" HorizontalAlignment="Right" MarginBottom="110" MarginRight="80" Color="#000000FF" AlphaFactor="0.1" Sprite="BlankWhiteSquare_9">
+			<Children>
+				
+				<!-- 聊天功能 -->
+				<ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" StackLayout.LayoutMethod="VerticalBottomToTop" Color="#000000FF" AlphaFactor="0.2" Sprite="BlankWhiteSquare_9">
+					<Children>
+						
+						<ListPanel Id="TopBtn" DataSource="{ChannelButtons}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
+							<ItemTemplate>
+								
+								<Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"  SuggestedWidth="75" SuggestedHeight="40" Color="#000000FF" AlphaFactor="0.3" Sprite="BlankWhiteSquare_9" >
+									<Children>
+										<ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Top" Brush="MP.ChatLog.Filter.Button" Command.Click="ToggleIncludeCombatLog" IsSelected="@IsSelected" IsEnabled="@IsEnabled">
+											<Children>
+												<TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" VerticalAlignment="Center"  Brush="MP.ChatLog.Text" Brush.FontSize="20" Text="@Channel"></TextWidget>
+											</Children>
+										</ButtonWidget>
+									</Children>
+								</Widget>
+								
+							</ItemTemplate>
+						</ListPanel>
+						
+						<Widget Id="ScrollablePanelContainer" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="15" MarginBottom="85" MarginLeft="10" MarginRight="10" HorizontalAlignment="Center" >
+							<Children>
+								
+								<ScrollablePanel Id="ScrollablePanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" AutoHideScrollBars="false" VerticalAlignment="Bottom" ClipRect="ClipRect" InnerPanel="ClipRect\InnerContent" VerticalScrollbar="..\ScrollbarHolder\VerticalScrollbar" >
+									<Children>
+										<Widget Id="ClipRect" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="450" HorizontalAlignment="Center" VerticalAlignment="Center" ClipContents="true" >
+											<Children>
+												<ListPanel Id="InnerContent" DataSource="{MessageHistory}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" SuggestedWidth="450" HorizontalAlignment="Center" VerticalAlignment="Bottom"  StackLayout.LayoutMethod="VerticalBottomToTop">
+													<ItemTemplate>
+														
+														<ListPanel Id="Content"  WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren"   StackLayout.LayoutMethod="HorizontalLeftToRight" >
+															<Children>
+																
+																<ButtonWidget DoNotPassEventsToChildren="true"   WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" SuggestedWidth="80" SuggestedHeight="20" HorizontalAlignment="Left">
+																	<Children>
+																		<RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren"  HorizontalAlignment="Left" VerticalAlignment="Center" Brush="Stage.Title.Text" Brush.FontSize="20" Text="名称"></RichTextWidget>
+																	</Children>
+																</ButtonWidget>
+																
+																<TextWidget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent"  HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" Text=" 文字信息" Brush="MP.ChatLog.Text" Brush.FontSize="20"></TextWidget>
+															
+															</Children>
+														
+														</ListPanel>
+													</ItemTemplate>
+												</ListPanel>
+											</Children>
+										</Widget>
+									</Children>
+								</ScrollablePanel>
+								
+								<Widget Id="ScrollbarHolder" WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right">
+									<Children>
+										<ScrollbarWidget Id="VerticalScrollbar" WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" AlignmentAxis="Vertical" Handle="VerticalScrollbarHandle" MarginTop="20" MarginBottom="5" MaxValue="100" MinValue="0"  >
+											<Children>
+												<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="2" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#A37434FF" MarginTop="5" MarginBottom="5" AlphaFactor="1" ></Widget>
+												<ImageWidget Id="VerticalScrollbarHandle" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" MinHeight="15" SuggestedHeight="14" SuggestedWidth="14" HorizontalAlignment="Center" Brush="SPChatlog.Scrollbar.Handle" ></ImageWidget>
+											</Children>
+										</ScrollbarWidget>
+									</Children>
+								</Widget>
+
+							</Children>
+						</Widget>
+					</Children>
+				</ListPanel>
+
+				<Widget Id="BottomContainer" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80"  VerticalAlignment="Bottom">
+					<Children>
+						<TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedHeight="30" SuggestedWidth="200" HorizontalAlignment="Right" VerticalAlignment="Top" Brush="ChatLog.HideShowText" Text="提示文字"></TextWidget>
+						<Widget Id="EditableComtainer" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="50" VerticalAlignment="Bottom"  Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.6" StackLayout.LayoutMethod="HorizontalLeftToRight" >
+							<Children>
+								<ButtonWidget DoNotPassEventsToChildren="true"   WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="120" HorizontalAlignment="Left" Command.Click="SwitchChatType">
+									<Children>
+										<RichTextWidget   WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="Stage.Title.Text" Brush.FontSize="20" Text="@ChatLineText"></RichTextWidget>
+									</Children>
+								</ButtonWidget>
+								<OverrideEditableTextWidget Id="BottomTextInput"  HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" HorizontalAlignment="Left" VerticalAlignment="Bottom" MarginLeft="120" MarginRight="70" Brush="MP.ChatLog.Text" Brush.FontSize="16" RealText="@InputInfo" Command.Click="CheckIsOpened" KeyboardInfoText="@InputText" IsDisabled="IsDisabled"></OverrideEditableTextWidget>
+								<ButtonWidget DoNotPassEventsToChildren="true"  WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" SuggestedWidth="80"  Command.Click="ExecuteSendMessage" IsDisabled="IsDisabledBtn">
+									<Children>
+										<TextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="Stage.Title.Text" Brush.FontSize="20" Text="发送"></TextWidget>
+									</Children>
+								</ButtonWidget>
+							</Children>
+						</Widget>
+					</Children>
+				</Widget>
+				
+			</Children>
+		</Widget>
+	</Window>
+</Prefab>
