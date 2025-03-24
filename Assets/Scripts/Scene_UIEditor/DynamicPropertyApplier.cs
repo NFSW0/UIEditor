@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 
@@ -15,8 +16,11 @@ public class PropertyMapping
 
 public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
 {
-    private string configFilePath = Application.streamingAssetsPath + "/ConfigFile.csv";
+    private string configFilePath = Path.Combine(Application.streamingAssetsPath, "ConfigFile.csv");
     private List<PropertyMapping> mappings = new List<PropertyMapping>();
+
+    private bool hasMissingMapping = false; // 标记是否存在缺失的映射数据
+    private HashSet<string> missingKeys = new HashSet<string>(); // 用于记录缺失的键，避免重复添加
 
     protected override void Awake()
     {
@@ -25,11 +29,18 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
         if (result != null) { mappings = result; }
     }
 
+    protected override void OnDestroy()
+    {
+        if (hasMissingMapping)
+        {
+            mappings.Sort((a, b) => string.Compare(a.key, b.key, StringComparison.Ordinal));
+            FileManager.Instance.SaveData(mappings, configFilePath, FileManager.DataFormat.Csv);
+        }
+        base.OnDestroy();
+    }
+
     public void ApplyProperties(GameObject target, Dictionary<string, string> data)
     {
-        bool hasMissingMapping = false; // 标记是否存在缺失的映射数据
-        var missingKeys = new HashSet<string>(); // 用于记录缺失的键，避免重复添加
-
         foreach (var entry in data)
         {
             // 查找映射
@@ -46,21 +57,14 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
             else
             {
                 // 记录缺失的映射数据
-                Debug.LogWarning($"缺少{entry.Key}的映射数据");
-                if (!missingKeys.Contains(entry.Key))
-                {
-                    mappings.Add(new PropertyMapping() { key = entry.Key, componentType = "", propertyPath = "", valueType = "" });
-                    missingKeys.Add(entry.Key); // 避免重复添加
-                }
-                hasMissingMapping = true; // 标记存在缺失映射
+                //Debug.LogWarning($"缺少{entry.Key}的映射数据");
+                //if (!missingKeys.Contains(entry.Key))
+                //{
+                //    mappings.Add(new PropertyMapping() { key = entry.Key, componentType = "", propertyPath = "", valueType = "" });
+                //    missingKeys.Add(entry.Key); // 避免重复添加
+                //}
+                //hasMissingMapping = true; // 标记存在缺失映射
             }
-        }
-
-        // 如果存在缺失映射，更新文件
-        if (hasMissingMapping)
-        {
-            mappings.Sort((a, b) => string.Compare(a.key, b.key, StringComparison.Ordinal));
-            FileManager.Instance.SaveData(mappings, configFilePath, FileManager.DataFormat.Csv);
         }
     }
 

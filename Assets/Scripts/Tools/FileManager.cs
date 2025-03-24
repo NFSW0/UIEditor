@@ -263,12 +263,29 @@ public class FileManager : MonoSingleton<FileManager>
             }
 
             var header = lines[0].Split(',');
-            var properties = typeof(T).GetProperties();
 
             // 检查 T 是否为 List<TItem>
-            var listType = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>);
-            var listInstance = listType ? Activator.CreateInstance(typeof(T)) as System.Collections.IList : null;
-            var itemType = listType ? typeof(T).GetGenericArguments()[0] : typeof(T);
+            Type itemType;
+            bool isList = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>);
+            if (isList)
+            {
+                itemType = typeof(T).GetGenericArguments()[0]; // 获取泛型参数类型（如 PropertyMapping）
+            }
+            else
+            {
+                itemType = typeof(T); // 如果不是列表，则直接使用 T
+            }
+
+            // 获取字段（支持字段而非属性）
+            var fields = itemType.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            if (fields.Length == 0)
+            {
+                Debug.LogWarning($"类型 {itemType.Name} 中没有可序列化的字段");
+                return default;
+            }
+
+            // 创建列表实例（如果 T 是 List<TItem>）
+            var listInstance = isList ? Activator.CreateInstance(typeof(T)) as System.Collections.IList : null;
 
             for (int i = 1; i < lines.Length; i++)
             {
@@ -282,41 +299,77 @@ public class FileManager : MonoSingleton<FileManager>
 
                 var item = Activator.CreateInstance(itemType);
 
-                foreach (var property in itemType.GetProperties())
+                foreach (var field in fields)
                 {
-                    int index = Array.IndexOf(header, property.Name);
+                    int index = Array.IndexOf(header, field.Name);
                     if (index >= 0 && index < values.Length)
                     {
                         try
                         {
-                            object convertedValue;
-                            if (property.PropertyType == typeof(bool))
+                            // 清理字段值
+                            var rawValue = values[index].Trim();
+                            if (rawValue.StartsWith("\"") && rawValue.EndsWith("\""))
                             {
-                                convertedValue = values[index].ToLower() == "true";
+                                rawValue = rawValue.Substring(1, rawValue.Length - 2); // 去除首尾双引号
+                            }
+
+                            object convertedValue;
+
+                            // 处理空值
+                            if (string.IsNullOrWhiteSpace(rawValue))
+                            {
+                                // 提供默认值
+                                convertedValue = GetDefaultValue(field.FieldType);
                             }
                             else
                             {
-                                convertedValue = Convert.ChangeType(values[index], property.PropertyType);
+                                // 类型转换
+                                if (field.FieldType == typeof(bool))
+                                {
+                                    convertedValue = rawValue.ToUpper() == "TRUE";
+                                }
+                                else
+                                {
+                                    convertedValue = Convert.ChangeType(rawValue, field.FieldType);
+                                }
                             }
-                            property.SetValue(item, convertedValue);
+
+                            field.SetValue(item, convertedValue);
                         }
                         catch (Exception ex)
                         {
-                            Debug.LogWarning($"无法转换值 '{values[index]}' 到属性 '{property.Name}': {ex.Message}");
+                            Debug.LogWarning($"无法转换值 '{values[index]}' 到字段 '{field.Name}': {ex.Message}");
                         }
                     }
                 }
 
-                listInstance?.Add(item);
+                if (isList)
+                {
+                    listInstance?.Add(item); // 添加到列表中
+                }
+                else
+                {
+                    return (T)(object)item; // 如果不是列表，直接返回单个对象
+                }
             }
 
-            return listType ? (T)listInstance : (T)(object)listInstance?.Cast<object>().FirstOrDefault();
+            return isList ? (T)listInstance : default;
         }
         catch (Exception ex)
         {
             Debug.LogError($"读取 CSV 文件 {path} 时发生错误: {ex.Message}");
             return default;
         }
+    }
+
+    // 获取字段类型的默认值
+    private static object GetDefaultValue(Type type)
+    {
+        if (type.IsValueType)
+        {
+            return Activator.CreateInstance(type); // 值类型（如 int、float、bool）的默认值
+        }
+        return null; // 引用类型（如 string）的默认值
     }
 
     private void EnsureDirectoryExists(string filePath)
