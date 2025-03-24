@@ -164,85 +164,157 @@ public class FileManager : MonoSingleton<FileManager>
 
     private void SaveToCsv<T>(T data, string path)
     {
-        if (data is System.Collections.IEnumerable enumerable)
+        try
         {
-            var properties = typeof(T).GetProperties();
-            var header = string.Join(",", properties.Select(p => p.Name));
+            if (data == null)
+            {
+                Debug.LogWarning("尝试保存到 CSV 但数据为空。");
+                return;
+            }
+
+            Type targetType;
+            List<object> items = new List<object>();
+
+            if (data is System.Collections.IEnumerable enumerable)
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item != null)
+                    {
+                        items.Add(item);
+                    }
+                }
+
+                if (items.Count == 0)
+                {
+                    Debug.LogWarning("列表数据为空，无法保存到 CSV。");
+                    return;
+                }
+
+                targetType = items[0].GetType();
+            }
+            else
+            {
+                items.Add(data);
+                targetType = typeof(T);
+            }
+
+            var fields = targetType.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            if (fields.Length == 0)
+            {
+                Debug.LogWarning("数据对象缺少可序列化的字段，无法保存到 CSV。");
+                return;
+            }
+
+            var header = string.Join(",", fields.Select(f => f.Name));
 
             var rows = new List<string>();
-            foreach (var item in enumerable)
+            foreach (var item in items)
             {
-                var row = string.Join(",", properties.Select(p => p.GetValue(item)?.ToString() ?? ""));
-                rows.Add(row);
+                try
+                {
+                    var row = string.Join(",", fields.Select(f =>
+                    {
+                        var value = f.GetValue(item);
+                        return value != null ? $"\"{value.ToString().Replace("\"", "\"\"")}\"" : "";
+                    }));
+                    rows.Add(row);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"序列化对象 {item.GetType().Name} 时发生错误: {ex.Message}");
+                }
             }
 
             File.WriteAllText(path, header + Environment.NewLine + string.Join(Environment.NewLine, rows));
         }
-        else
+        catch (IOException ioEx)
         {
-            var properties = typeof(T).GetProperties();
-            var header = string.Join(",", properties.Select(p => p.Name));
-            var row = string.Join(",", properties.Select(p => p.GetValue(data)?.ToString() ?? ""));
-
-            File.WriteAllText(path, header + Environment.NewLine + row);
+            Debug.LogError($"写入 CSV 文件 {path} 时发生 IO 错误: {ioEx.Message}");
+        }
+        catch (UnauthorizedAccessException uaEx)
+        {
+            Debug.LogError($"无权访问文件 {path}: {uaEx.Message}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"保存 CSV 文件 {path} 时发生未知错误: {ex.Message}");
         }
     }
 
     private T ReadFromCsv<T>(string path) where T : new()
     {
-        var lines = File.ReadAllLines(path);
-
-        lines = lines.Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
-
-        if (lines.Length == 0)
+        try
         {
-            Debug.LogWarning("CSV 文件为空");
-            return default;
-        }
+            if (!File.Exists(path))
+            {
+                Debug.LogWarning($"CSV 文件不存在: {path}");
+                return default;
+            }
 
-        var header = lines[0].Split(',');
+            var lines = File.ReadAllLines(path)
+                            .Where(line => !string.IsNullOrWhiteSpace(line))
+                            .ToArray();
 
-        if (lines.Length > 1)
-        {
-            var data = new List<T>();
+            if (lines.Length < 2) // 至少需要标题行 + 数据行
+            {
+                Debug.LogWarning($"CSV 文件 {path} 缺少数据行");
+                return default;
+            }
+
+            var header = lines[0].Split(',');
+            var properties = typeof(T).GetProperties();
+
+            // 检查 T 是否为 List<TItem>
+            var listType = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>);
+            var listInstance = listType ? Activator.CreateInstance(typeof(T)) as System.Collections.IList : null;
+            var itemType = listType ? typeof(T).GetGenericArguments()[0] : typeof(T);
+
             for (int i = 1; i < lines.Length; i++)
             {
                 var values = lines[i].Split(',');
 
                 if (values.Length != header.Length)
                 {
-                    Debug.LogWarning($"跳过无效行: {lines[i]}");
+                    Debug.LogWarning($"跳过格式错误的行: {lines[i]}");
                     continue;
                 }
 
-                var item = new T();
+                var item = Activator.CreateInstance(itemType);
 
-                var properties = typeof(T).GetProperties();
-                for (int j = 0; j < header.Length; j++)
+                foreach (var property in itemType.GetProperties())
                 {
-                    var property = properties.FirstOrDefault(p => p.Name == header[j]);
-                    if (property != null && j < values.Length)
+                    int index = Array.IndexOf(header, property.Name);
+                    if (index >= 0 && index < values.Length)
                     {
                         try
                         {
-                            var value = Convert.ChangeType(values[j], property.PropertyType);
-                            property.SetValue(item, value);
+                            object convertedValue;
+                            if (property.PropertyType == typeof(bool))
+                            {
+                                convertedValue = values[index].ToLower() == "true";
+                            }
+                            else
+                            {
+                                convertedValue = Convert.ChangeType(values[index], property.PropertyType);
+                            }
+                            property.SetValue(item, convertedValue);
                         }
                         catch (Exception ex)
                         {
-                            Debug.LogWarning($"无法转换值 '{values[j]}' 到属性 '{property.Name}': {ex.Message}");
+                            Debug.LogWarning($"无法转换值 '{values[index]}' 到属性 '{property.Name}': {ex.Message}");
                         }
                     }
                 }
 
-                data.Add(item);
+                listInstance?.Add(item);
             }
 
-            return data.FirstOrDefault();
+            return listType ? (T)listInstance : (T)(object)listInstance?.Cast<object>().FirstOrDefault();
         }
-        else
+        catch (Exception ex)
         {
-            Debug.LogWarning("CSV 文件缺少数据行");
+            Debug.LogError($"读取 CSV 文件 {path} 时发生错误: {ex.Message}");
             return default;
         }
     }
@@ -259,7 +331,7 @@ public class FileManager : MonoSingleton<FileManager>
 
     private void LogError(System.Exception ex, string path)
     {
-        Debug.LogError($"文件访问失败: {path}\n错误报告: {ex}");
+        Debug.LogError($"文件处理失败: {path}\n错误报告: {ex}");
     }
 
     public enum DataFormat
