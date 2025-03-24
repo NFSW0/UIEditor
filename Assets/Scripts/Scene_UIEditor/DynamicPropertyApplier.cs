@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class PropertyMapping
@@ -18,9 +19,7 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
 {
     private string configFilePath = Path.Combine(Application.streamingAssetsPath, "ConfigFile.csv");
     private List<PropertyMapping> mappings = new List<PropertyMapping>();
-
     private bool hasMissingMapping = false; // 标记是否存在缺失的映射数据
-    private HashSet<string> missingKeys = new HashSet<string>(); // 用于记录缺失的键，避免重复添加
 
     protected override void Awake()
     {
@@ -49,21 +48,13 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
             if (mapping != null)
             {
                 // 如果已经发现缺失映射，则不再调用 ApplyProperty
-                if (!hasMissingMapping)
-                {
-                    ApplyProperty(target, mapping, entry.Value);
-                }
+                if (!hasMissingMapping) { ApplyProperty(target, mapping, entry.Value); }
             }
             else
             {
-                // 记录缺失的映射数据
-                //Debug.LogWarning($"缺少{entry.Key}的映射数据");
-                //if (!missingKeys.Contains(entry.Key))
-                //{
-                //    mappings.Add(new PropertyMapping() { key = entry.Key, componentType = "", propertyPath = "", valueType = "" });
-                //    missingKeys.Add(entry.Key); // 避免重复添加
-                //}
-                //hasMissingMapping = true; // 标记存在缺失映射
+                Debug.LogWarning($"缺少{entry.Key}的映射数据");
+                mappings.Add(new PropertyMapping() { key = entry.Key, componentType = "", propertyPath = "", valueType = "" });
+                hasMissingMapping = true; // 标记存在缺失映射
             }
         }
     }
@@ -77,7 +68,7 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
 
             if (componentType == null)
             {
-                Debug.LogError($"属性 {mapping.key} 的组件映射为空");
+                Debug.LogError($"属性 {mapping.key} 的组件 {mapping.componentType} 不存在");
                 return;
             }
 
@@ -87,7 +78,7 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
             {
                 if (!mapping.allowAddComponent)
                 {
-                    Debug.LogWarning($"缺失组件: {mapping.componentType}");
+                    Debug.LogWarning($"缺少组件, 同时属性 {mapping.key} 不允许添加组件 {mapping.componentType}");
                     return;
                 }
 
@@ -112,7 +103,7 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
                 var newTarget = GetMemberValue(targetObject, pathSegments[i]);
                 if (newTarget == null)
                 {
-                    Debug.LogError($"属性 {mapping.key} 的组件参数映射为空: {string.Join(".", pathSegments, 0, i + 1)}");
+                    Debug.LogError($"属性 {mapping.key} 的组件参数路径存在问题: {string.Join(".", pathSegments, 0, i + 1)}");
                     return;
                 }
                 targetObject = newTarget;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -289,7 +290,7 @@ public class FileManager : MonoSingleton<FileManager>
 
             for (int i = 1; i < lines.Length; i++)
             {
-                var values = lines[i].Split(',');
+                var values = ParseCsvLine(lines[i]);
 
                 if (values.Length != header.Length)
                 {
@@ -370,6 +371,50 @@ public class FileManager : MonoSingleton<FileManager>
             return Activator.CreateInstance(type); // 值类型（如 int、float、bool）的默认值
         }
         return null; // 引用类型（如 string）的默认值
+    }
+
+    // 自定义方法：解析 CSV 行文本，支持双引号包裹的内容
+    private static string[] ParseCsvLine(string line)
+    {
+        var result = new List<string>();
+        var currentField = new StringBuilder();
+        bool insideQuotes = false;
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+
+            if (c == '"')
+            {
+                // 检测是否为转义的双引号（两个连续的双引号）
+                if (i + 1 < line.Length && line[i + 1] == '"')
+                {
+                    currentField.Append('"'); // 将转义的双引号添加到当前字段
+                    i++; // 跳过下一个双引号
+                }
+                else
+                {
+                    // 切换是否在双引号内部
+                    insideQuotes = !insideQuotes;
+                }
+            }
+            else if (c == ',' && !insideQuotes)
+            {
+                // 如果不在双引号内部，遇到逗号则结束当前字段
+                result.Add(currentField.ToString());
+                currentField.Clear();
+            }
+            else
+            {
+                // 否则将字符添加到当前字段
+                currentField.Append(c);
+            }
+        }
+
+        // 添加最后一个字段
+        result.Add(currentField.ToString());
+
+        return result.ToArray();
     }
 
     private void EnsureDirectoryExists(string filePath)

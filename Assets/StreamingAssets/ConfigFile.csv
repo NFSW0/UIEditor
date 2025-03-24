@@ -1,38 +1,38 @@
 key,componentType,propertyPath,valueType,allowAddComponent
-"AlignmentAxis","","","","True"
-"AlphaFactor","","","","True"
-"AutoHideScrollBars","","","","True"
-"Brush","","","","True"
-"Brush.FontSize","","","","True"
-"ClipContents","","","","True"
-"ClipRect","","","","True"
-"Color","","","","True"
-"Command.Click","","","","True"
-"DataSource","","","","True"
-"DoNotAcceptEvents","","","","True"
-"DoNotPassEventsToChildren","","","","True"
-"Handle","","","","True"
-"HeightSizePolicy","","","","True"
-"HorizontalAlignment","","","","True"
-"Id","","","","True"
-"InnerPanel","","","","True"
-"IsDisabled","","","","True"
-"IsEnabled","","","","True"
-"IsSelected","","","","True"
-"KeyboardInfoText","","","","True"
-"MarginBottom","","","","True"
-"MarginLeft","","","","True"
-"MarginRight","","","","True"
-"MarginTop","","","","True"
-"MaxValue","","","","True"
-"MinHeight","","","","True"
-"MinValue","","","","True"
-"RealText","","","","True"
-"Sprite","","","","True"
-"StackLayout.LayoutMethod","","","","True"
-"SuggestedHeight","","","","True"
-"SuggestedWidth","","","","True"
-"Text","","","","True"
-"VerticalAlignment","","","","True"
-"VerticalScrollbar","","","","True"
-"WidthSizePolicy","","","","True"
+AlignmentAxis,"UnityEngine.UI.GraphicRaycaster, UnityEngine.UI",alignment,string,TRUE
+AlphaFactor,"UnityEngine.UI.Graphic, UnityEngine.UI",color.a,float,TRUE
+AutoHideScrollBars,"UnityEngine.UI.ScrollRect, UnityEngine.UI",autoHideScrollbar,bool,TRUE
+Brush,"UnityEngine.UI.Text, UnityEngine.UI",font,UnityEngine.Font,TRUE
+Brush.FontSize,"UnityEngine.UI.Text, UnityEngine.UI",fontSize,int,TRUE
+ClipContents,"UnityEngine.UI.Mask, UnityEngine.UI",enabled,bool,TRUE
+ClipRect,"UnityEngine.UI.RectMask2D, UnityEngine.UI",softEdgeRadius,float,TRUE
+Color,"UnityEngine.UI.Graphic, UnityEngine.UI",color,Color,TRUE
+Command.Click,"UnityEngine.UI.Button, UnityEngine.UI",onClick,UnityAction,TRUE
+DataSource,"UnityEngine.UI.Dropdown, UnityEngine.UI",options,List<Dropdown.OptionData>,TRUE
+DoNotAcceptEvents,"UnityEngine.UI.Selectable, UnityEngine.UI",interactable,bool,TRUE
+DoNotPassEventsToChildren,"UnityEngine.UI.GraphicRaycaster, UnityEngine.UI",ignoreReversedGraphics,bool,TRUE
+Handle,"UnityEngine.UI.Slider, UnityEngine.UI",handleRect,RectTransform,TRUE
+HeightSizePolicy,"UnityEngine.UI.LayoutElement, UnityEngine.UI",minHeight,float,TRUE
+HorizontalAlignment,"UnityEngine.UI.HorizontalLayoutGroup, UnityEngine.UI",childAlignment,TextAnchor,TRUE
+Id,"UnityEngine.UI.Selectable, UnityEngine.UI",name,string,TRUE
+InnerPanel,"UnityEngine.UI.ScrollRect, UnityEngine.UI",viewport,RectTransform,TRUE
+IsDisabled,"UnityEngine.UI.Selectable, UnityEngine.UI",interactable,bool,TRUE
+IsEnabled,"UnityEngine.UI.Selectable, UnityEngine.UI",interactable,bool,TRUE
+IsSelected,"UnityEngine.UI.Toggle, UnityEngine.UI",isOn,bool,TRUE
+KeyboardInfoText,"UnityEngine.UI.InputField, UnityEngine.UI",text,string,TRUE
+MarginBottom,"UnityEngine.UI.LayoutGroup, UnityEngine.UI",padding.bottom,int,TRUE
+MarginLeft,"UnityEngine.UI.LayoutGroup, UnityEngine.UI",padding.left,int,TRUE
+MarginRight,"UnityEngine.UI.LayoutGroup, UnityEngine.UI",padding.right,int,TRUE
+MarginTop,"UnityEngine.UI.LayoutGroup, UnityEngine.UI",padding.top,int,TRUE
+MaxValue,"UnityEngine.UI.Slider, UnityEngine.UI",maxValue,float,TRUE
+MinHeight,"UnityEngine.UI.LayoutElement, UnityEngine.UI",minHeight,float,TRUE
+MinValue,"UnityEngine.UI.Slider, UnityEngine.UI",minValue,float,TRUE
+RealText,"UnityEngine.UI.Text, UnityEngine.UI",text,string,TRUE
+Sprite,"UnityEngine.UI.Image, UnityEngine.UI",sprite,UnityEngine.Sprite,TRUE
+StackLayout.LayoutMethod,"UnityEngine.UI.VerticalLayoutGroup, UnityEngine.UI",childForceExpandHeight,bool,TRUE
+SuggestedHeight,"UnityEngine.RectTransform, UnityEngine",sizeDelta.y,float,TRUE
+SuggestedWidth,"UnityEngine.RectTransform, UnityEngine",sizeDelta.x,float,TRUE
+Text,"UnityEngine.UI.Text, UnityEngine.UI",text,string,TRUE
+VerticalAlignment,"UnityEngine.UI.VerticalLayoutGroup, UnityEngine.UI",childAlignment,TextAnchor,TRUE
+VerticalScrollbar,"UnityEngine.UI.ScrollRect, UnityEngine.UI",verticalScrollbar,Scrollbar,TRUE
+WidthSizePolicy,"UnityEngine.UI.LayoutElement, UnityEngine.UI",preferredWidth,float,TRUE
