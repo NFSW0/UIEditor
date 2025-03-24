@@ -167,6 +167,7 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
                 "Color" => ParseColor(value),
                 "Vector2" => ParseVector2(value),
                 "Vector3" => ParseVector3(value),
+                "UnityEngine.Sprite" => ParseSprite(value),
                 _ => Type.GetType(typeName)?.IsEnum == true
                     ? Enum.Parse(Type.GetType(typeName), value)
                     : Convert.ChangeType(value, Type.GetType(typeName))
@@ -221,4 +222,50 @@ public class DynamicPropertyApplier : MonoSingleton<DynamicPropertyApplier>
         // 如果格式不正确，抛出异常
         throw new FormatException("无效的三维矢量格式");
     }
+
+    // 图片解析
+    public Sprite ParseSprite(string value)
+    {
+        // 拼接完整路径
+        string spritePath = Path.Combine(Application.streamingAssetsPath, "Sprites", value);
+
+        // 检查文件是否存在
+        if (!File.Exists(spritePath))
+        {
+            Debug.LogError($"图片文件不存在: {spritePath}");
+            return null;
+        }
+
+        try
+        {
+            // 读取图片文件的字节数据
+            byte[] imageData = File.ReadAllBytes(spritePath);
+
+            // 创建Texture2D对象
+            Texture2D texture = new Texture2D(2, 2);
+            if (texture.LoadImage(imageData))
+            {
+                // 从Texture2D创建Sprite
+                Sprite sprite = Sprite.Create(
+                    texture,
+                    new Rect(0, 0, texture.width, texture.height),
+                    new Vector2(0.5f, 0.5f) // 中心点设置为图片中心
+                );
+                return sprite;
+            }
+            else
+            {
+                Debug.LogError($"无法加载图片数据: {spritePath}");
+                return null;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"加载图片时发生异常: {e.Message}");
+            return null;
+        }
+    }
+
+
+
 }
